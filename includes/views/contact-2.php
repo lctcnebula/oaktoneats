@@ -19,13 +19,6 @@
                 <p><?= e(ADDRESS_LINE2) ?> · Opening soon</p>
                 <span class="link">Directions <?= icon('arrow') ?></span>
             </a>
-            <a class="c2-way reveal" href="/catering">
-                <span class="ico"><?= icon('bag') ?></span>
-                <span class="kicker">Catering</span>
-                <h3>Feeding a crowd?</h3>
-                <p>Coffee boxes, breakfast platters and burger bars for any event.</p>
-                <span class="link">Get a quote <?= icon('arrow') ?></span>
-            </a>
             <a class="c2-way reveal" href="/careers">
                 <span class="ico"><?= icon('users') ?></span>
                 <span class="kicker">Careers</span>
@@ -51,7 +44,7 @@
         <div class="c2-side reveal">
             <span class="kicker">Write to us</span>
             <h2>Send a <em>note.</em></h2>
-            <p>We read every message and reply within a day or two. For catering, the <a href="/catering">quote form</a> gets you an answer faster.</p>
+            <p>We read every message and reply within a day or two.</p>
             <ul class="c2-list">
                 <li><span>Hours</span>Coming soon. Coffee all day, breakfast, lunch &amp; dinner.</li>
                 <?php if (EMAIL): ?><li><span>Email</span><a href="mailto:<?= e(EMAIL) ?>"><?= e(EMAIL) ?></a></li><?php endif; ?>

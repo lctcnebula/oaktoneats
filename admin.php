@@ -172,7 +172,6 @@ function sub_summary(array $row): string {
     $d = json_decode($row['data'], true) ?: [];
     return match ($row['type']) {
         'contact' => ($d['topic'] ?? '') . ': ' . mb_strimwidth($d['message'] ?? '', 0, 70, '…'),
-        'catering' => ($d['guests'] ?? '') . ' guests on ' . ($d['event_date'] ?? '') . ' · ' . ($d['service'] ?? '') . ($d['needs'] ?? '' ? ' · ' . $d['needs'] : ''),
         'career' => ($d['role'] ?? '') . ($d['availability'] ?? '' ? ' · ' . $d['availability'] : '') . (!empty($d['resume']) ? ' · Resume' : ''),
         default => 'Get notified signup',
     };
@@ -220,10 +219,10 @@ if ($p === 'export') {
     header('Content-Disposition: attachment; filename="oakton-eats-' . ($f['type'] ?: 'submissions') . '-' . date('Y-m-d') . '.csv"');
     $out = fopen('php://output', 'w');
     $cell = fn($v) => preg_match('/^[=+\-@]/', (string) $v) ? "'" . $v : $v;
-    fputcsv($out, escape: '', fields: ['id', 'date', 'type', 'status', 'name', 'email', 'phone', 'topic / role', 'message / about', 'availability', 'event date', 'guests', 'needs']);
+    fputcsv($out, escape: '', fields: ['id', 'date', 'type', 'status', 'name', 'email', 'phone', 'topic / role', 'message / about', 'availability']);
     foreach (sub_rows($f, 100000) as $row) {
         $d = json_decode($row['data'], true) ?: [];
-        fputcsv($out, escape: '', fields: array_map($cell, [$row['id'], $row['created_at'], $row['type'], $row['status'], $row['name'], $row['email'], $row['phone'], $d['topic'] ?? $d['role'] ?? '', $d['message'] ?? $d['about'] ?? '', $d['availability'] ?? '', $d['event_date'] ?? '', $d['guests'] ?? '', $d['needs'] ?? '']));
+        fputcsv($out, escape: '', fields: array_map($cell, [$row['id'], $row['created_at'], $row['type'], $row['status'], $row['name'], $row['email'], $row['phone'], $d['topic'] ?? $d['role'] ?? '', $d['message'] ?? $d['about'] ?? '', $d['availability'] ?? '']));
     }
     exit;
 }
@@ -247,7 +246,6 @@ admin_nav($p);
         ['New / unread', count_where($all + ['status' => 'new']), a_url(['p' => 'submissions', 'range' => 'all', 'status' => 'new'])],
         ['Signups', count_where($inRange + ['type' => 'signup']), a_url(['p' => 'submissions', 'range' => $r, 'type' => 'signup', 'from' => $from, 'to' => $to])],
         ['Contact', count_where($inRange + ['type' => 'contact']), a_url(['p' => 'submissions', 'range' => $r, 'type' => 'contact', 'from' => $from, 'to' => $to])],
-        ['Catering', count_where($inRange + ['type' => 'catering']), a_url(['p' => 'submissions', 'range' => $r, 'type' => 'catering', 'from' => $from, 'to' => $to])],
         ['Careers', count_where($inRange + ['type' => 'career']), a_url(['p' => 'careers', 'range' => $r, 'from' => $from, 'to' => $to])],
         ['Spam blocked', count_where($all + ['status' => 'spam']), a_url(['p' => 'submissions', 'range' => 'all', 'status' => 'spam']), 'warn'],
     ];
@@ -295,7 +293,7 @@ admin_nav($p);
     if (!$row): ?><p class="a-error">That submission doesn't exist.</p><?php else:
     if ($row['status'] === 'new') { db()->prepare("UPDATE submissions SET status = 'read' WHERE id = ?")->execute([$row['id']]); $row['status'] = 'read'; }
     $d = json_decode($row['data'], true) ?: [];
-    $fields = ['Name' => $row['name'], 'Email' => $row['email'], 'Phone' => $row['phone'], 'Topic' => $d['topic'] ?? '', 'Company' => $d['company'] ?? '', 'Event date' => $d['event_date'] ?? '', 'Guests' => $d['guests'] ?? '', 'Pickup / delivery' => $d['service'] ?? '', 'Needs' => $d['needs'] ?? '', 'Role' => $d['role'] ?? '', 'Availability' => $d['availability'] ?? '', 'Message' => $d['message'] ?? '', 'About' => $d['about'] ?? '', 'Received' => date('l, M j, Y \a\t g:i A', strtotime($row['created_at'])), 'IP address' => $row['ip']]; ?>
+    $fields = ['Name' => $row['name'], 'Email' => $row['email'], 'Phone' => $row['phone'], 'Topic' => $d['topic'] ?? '', 'Role' => $d['role'] ?? '', 'Availability' => $d['availability'] ?? '', 'Message' => $d['message'] ?? '', 'About' => $d['about'] ?? '', 'Received' => date('l, M j, Y \a\t g:i A', strtotime($row['created_at'])), 'IP address' => $row['ip']]; ?>
     <a class="a-back" href="<?= e(a_url(['p' => $row['type'] === 'career' ? 'careers' : 'submissions'])) ?>">← Back</a>
     <div class="a-toolbar">
         <h1 class="a-h1">#<?= (int) $row['id'] ?> · <?= e(SUBMISSION_TYPES[$row['type']] ?? $row['type']) ?> <?= status_badge($row['status']) ?></h1>

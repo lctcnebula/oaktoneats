@@ -4,7 +4,7 @@
 // Otherwise it uses one SQLite file at data/oakton.sqlite, which works on regular PHP hosting with no setup.
 
 const DB_FILE = __DIR__ . '/../data/oakton.sqlite';
-const SUBMISSION_TYPES = ['signup' => 'Signup', 'contact' => 'Contact', 'catering' => 'Catering', 'career' => 'Careers'];
+const SUBMISSION_TYPES = ['signup' => 'Signup', 'contact' => 'Contact', 'career' => 'Careers'];
 const SUBMISSION_STATUSES = ['new' => 'New', 'read' => 'Read', 'done' => 'Done', 'spam' => 'Spam'];
 const RESUME_MAX_BYTES = 4 * 1024 * 1024; // Vercel caps a whole request at 4.5 MB
 
