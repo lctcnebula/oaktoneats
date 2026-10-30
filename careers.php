@@ -1,6 +1,6 @@
 <?php
-// Careers page. Applications are saved to the site database (see /admin), with an optional
-// resume stored in data/resumes/. NOTIFY_EMAIL gets an email for each one if set.
+// Careers page. Applications and their optional resume are saved to the site database (see /admin).
+// NOTIFY_EMAIL gets an email for each one if set.
 require_once __DIR__ . '/includes/functions.php';
 
 $roles = [
@@ -29,20 +29,15 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
     elseif (!filter_var($old['email'], FILTER_VALIDATE_EMAIL)) $error = 'Please enter a valid email address.';
     elseif ($old['phone'] === '') $error = 'Please add a phone number so we can reach you.';
 
-    // Optional resume: PDF or Word, up to 5 MB, stored under a random name.
-    $resume = '';
+    // Optional resume: PDF or Word, up to 4 MB, kept in the database.
+    $resume = 0;
     $file = $_FILES['resume'] ?? null;
     if (!$error && $file && $file['error'] !== UPLOAD_ERR_NO_FILE) {
         $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
         $mime = $file['error'] === UPLOAD_ERR_OK ? (new finfo(FILEINFO_MIME_TYPE))->file($file['tmp_name']) : '';
-        if ($file['error'] !== UPLOAD_ERR_OK || $file['size'] > 5 * 1024 * 1024) $error = 'Your resume needs to be under 5 MB.';
+        if ($file['error'] !== UPLOAD_ERR_OK || $file['size'] > RESUME_MAX_BYTES) $error = 'Your resume needs to be under 4 MB.';
         elseif (!isset($resumeTypes[$ext]) || !in_array($mime, [$resumeTypes[$ext], 'application/zip', 'application/octet-stream'], true)) $error = 'Please upload your resume as a PDF or Word file.';
-        else {
-            $dir = __DIR__ . '/data/resumes';
-            if (!is_dir($dir)) mkdir($dir, 0750, true);
-            $resume = bin2hex(random_bytes(12)) . '.' . $ext;
-            if (!move_uploaded_file($file['tmp_name'], "$dir/$resume")) { $resume = ''; $error = 'Your resume did not upload. Please try again.'; }
-        }
+        else $resume = save_file('resume.' . $ext, $resumeTypes[$ext], file_get_contents($file['tmp_name']));
     }
 
     if (!$error) {
@@ -142,7 +137,7 @@ require __DIR__ . '/includes/header.php';
                         <?php foreach ($times as $t): ?><label><input type="checkbox" name="times[]" value="<?= e($t) ?>"<?= in_array($t, $old['times'], true) ? ' checked' : '' ?>> <?= e($t) ?></label><?php endforeach; ?>
                     </fieldset>
                     <label>About you <span class="opt">(optional)</span><textarea name="about" rows="5" maxlength="2000" placeholder="Past jobs, what you enjoy, anything we should know"><?= e($old['about']) ?></textarea></label>
-                    <label>Resume <span class="opt">(optional, PDF or Word, up to 5 MB)</span><input type="file" name="resume" accept=".pdf,.doc,.docx"></label>
+                    <label>Resume <span class="opt">(optional, PDF or Word, up to 4 MB)</span><input type="file" name="resume" accept=".pdf,.doc,.docx"></label>
                     <label class="hp" aria-hidden="true">Leave this empty<input type="text" name="website" tabindex="-1" autocomplete="off"></label>
                     <button class="btn btn-gold" type="submit">Send application <?= icon('arrow-ur') ?></button>
                 </form>

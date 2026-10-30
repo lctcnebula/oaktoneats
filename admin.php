@@ -1,25 +1,45 @@
 <?php
 // Admin at /admin: dashboard, every form submission (signups, contact, careers), resumes and password.
-// The first visit asks you to create the admin password. It's stored hashed in data/oakton.sqlite.
+// The first visit asks you to create the admin password. It's stored hashed in the site database.
 require_once __DIR__ . '/includes/functions.php';
 
-session_set_cookie_params(['httponly' => true, 'samesite' => 'Lax', 'secure' => !empty($_SERVER['HTTPS'])]);
-session_name('oe_admin');
-session_start();
 header('X-Robots-Tag: noindex, nofollow');
 header('X-Frame-Options: DENY');
+header('Cache-Control: no-store');
+
+// Sign-in lives in a signed cookie (no server sessions, so it works on Vercel too).
+// The signing key comes from the password hash plus a random secret kept in the database,
+// so changing the password signs everyone else out.
+function admin_key(string $hash): string {
+    $secret = setting('app_secret');
+    if (!$secret) { $secret = bin2hex(random_bytes(32)); set_setting('app_secret', $secret); }
+    return hash('sha256', $secret . '|' . $hash);
+}
+function set_cookie(string $name, string $value, int $expires): void {
+    setcookie($name, $value, ['expires' => $expires, 'path' => '/admin', 'httponly' => true, 'samesite' => 'Strict', 'secure' => is_https()]);
+    $_COOKIE[$name] = $value;
+}
+function is_https(): bool { return !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || ($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '') === 'https'; }
+function login_as(string $hash): void {
+    $exp = time() + 60 * 60 * 12;
+    set_cookie('oe_admin', $exp . '.' . hash_hmac('sha256', 'admin|' . $exp, admin_key($hash)), $exp);
+}
+function signed_in(?string $hash): bool {
+    [$exp, $sig] = array_pad(explode('.', $_COOKIE['oe_admin'] ?? '', 2), 2, '');
+    return $hash && ctype_digit($exp) && (int) $exp > time() && hash_equals(hash_hmac('sha256', 'admin|' . $exp, admin_key($hash)), $sig);
+}
 
 $p = preg_replace('/[^a-z]/', '', $_GET['p'] ?? 'dashboard');
 $hash = setting('admin_password');
-$authed = !empty($_SESSION['admin']) && $hash && hash_equals($_SESSION['admin'], hash('sha256', $hash));
-$flash = $_SESSION['flash'] ?? ''; unset($_SESSION['flash']);
-if (empty($_SESSION['csrf'])) $_SESSION['csrf'] = bin2hex(random_bytes(16));
+$authed = signed_in($hash);
+$flash = $_COOKIE['oe_flash'] ?? '';
+if ($flash !== '') set_cookie('oe_flash', '', 1);
+if (empty($_COOKIE['oe_csrf']) || !ctype_xdigit($_COOKIE['oe_csrf'])) set_cookie('oe_csrf', bin2hex(random_bytes(16)), 0);
 
 function a_url(array $q = []): string { return '/admin' . ($q ? '?' . http_build_query($q) : ''); }
-function a_go(array $q = [], string $flash = ''): never { if ($flash) $_SESSION['flash'] = $flash; header('Location: ' . a_url($q)); exit; }
-function csrf_field(): string { return '<input type="hidden" name="csrf" value="' . e($_SESSION['csrf']) . '">'; }
-function csrf_ok(): bool { return hash_equals($_SESSION['csrf'] ?? '', (string) ($_POST['csrf'] ?? '')); }
-function login_as(string $hash): void { session_regenerate_id(true); $_SESSION['admin'] = hash('sha256', $hash); }
+function a_go(array $q = [], string $flash = ''): never { if ($flash) set_cookie('oe_flash', $flash, time() + 60); header('Location: ' . a_url($q)); exit; }
+function csrf_field(): string { return '<input type="hidden" name="csrf" value="' . e($_COOKIE['oe_csrf']) . '">'; }
+function csrf_ok(): bool { return hash_equals($_COOKIE['oe_csrf'] ?? '', (string) ($_POST['csrf'] ?? '')); }
 
 $post = ($_SERVER['REQUEST_METHOD'] ?? '') === 'POST';
 $error = '';
@@ -27,7 +47,7 @@ $error = '';
 // ---------- Not signed in: create a password on first run, otherwise sign in ----------
 if (!$authed) {
     $fails = json_decode(setting('login_fails', '{}'), true) ?: [];
-    $ip = $_SERVER['REMOTE_ADDR'] ?? '';
+    $ip = client_ip();
     $locked = isset($fails[$ip]) && $fails[$ip]['n'] >= 8 && time() - $fails[$ip]['t'] < 900;
 
     if ($post && csrf_ok()) {
@@ -68,18 +88,17 @@ if (!$authed) {
 }
 
 // ---------- Actions ----------
-if ($p === 'logout') { session_destroy(); header('Location: /admin'); exit; }
+if ($p === 'logout') { set_cookie('oe_admin', '', 1); header('Location: /admin'); exit; }
 
 if ($p === 'resume') {
     $row = find_submission((int) ($_GET['id'] ?? 0));
-    $file = $row ? (json_decode($row['data'], true)['resume'] ?? '') : '';
-    $path = __DIR__ . '/data/resumes/' . basename($file);
-    if (!$file || !is_file($path)) { http_response_code(404); exit('Resume not found.'); }
-    $name = preg_replace('/[^A-Za-z0-9]+/', '-', $row['name']) . '-resume.' . pathinfo($path, PATHINFO_EXTENSION);
-    header('Content-Type: application/octet-stream');
+    $file = $row ? find_file((int) (json_decode($row['data'], true)['resume'] ?? 0)) : null;
+    if (!$file) { http_response_code(404); exit('Resume not found.'); }
+    $name = preg_replace('/[^A-Za-z0-9]+/', '-', $row['name']) . '-resume.' . pathinfo($file['name'], PATHINFO_EXTENSION);
+    header('Content-Type: ' . $file['mime']);
     header('Content-Disposition: attachment; filename="' . $name . '"');
-    header('Content-Length: ' . filesize($path));
-    readfile($path);
+    header('Content-Length: ' . strlen($file['content']));
+    echo $file['content'];
     exit;
 }
 
@@ -91,8 +110,7 @@ if ($post) {
         a_go(['p' => 'view', 'id' => $id], 'Marked as ' . SUBMISSION_STATUSES[$_POST['status']] . '.');
     }
     if ($p === 'delete' && ($row = find_submission($id))) {
-        $resume = json_decode($row['data'], true)['resume'] ?? '';
-        if ($resume) @unlink(__DIR__ . '/data/resumes/' . basename($resume));
+        if ($resume = (int) (json_decode($row['data'], true)['resume'] ?? 0)) delete_file($resume);
         db()->prepare('DELETE FROM submissions WHERE id = ?')->execute([$id]);
         a_go(['p' => 'submissions'], "Deleted #$id.");
     }
@@ -126,7 +144,7 @@ function where(array $f, array &$args): string {
     if (!empty($f['type'])) { $w[] = 'type = ?'; $args[] = $f['type']; }
     if (!empty($f['status'])) { $w[] = 'status = ?'; $args[] = $f['status']; }
     elseif (empty($f['with_spam'])) { $w[] = "status != 'spam'"; }
-    if (!empty($f['q'])) { $w[] = '(name LIKE ? OR email LIKE ? OR phone LIKE ? OR data LIKE ?)'; array_push($args, ...array_fill(0, 4, '%' . $f['q'] . '%')); }
+    if (!empty($f['q'])) { $w[] = '(lower(name) LIKE lower(?) OR lower(email) LIKE lower(?) OR phone LIKE ? OR lower(data) LIKE lower(?))'; array_push($args, ...array_fill(0, 4, '%' . $f['q'] . '%')); }
     return $w ? ' WHERE ' . implode(' AND ', $w) : '';
 }
 

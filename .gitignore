@@ -8,3 +8,4 @@ oakton-eats-tour*.mp4
 .DS_Store
 .env*
 .claude/
+.vercel
