@@ -124,8 +124,22 @@ function icon(string $name): string {
 function logo_mark(string $class = 'logo-mark'): string {
     return '<img class="' . e($class) . '" src="/assets/img/logo-icon.png" alt="" width="270" height="372">';
 }
+// Remembers which homepage template the visitor opened, so "Home" and the logo lead back to it.
+function remember_home(string $slug): void {
+    if (($_COOKIE['oe_home'] ?? '') !== $slug && !headers_sent()) {
+        setcookie('oe_home', $slug, ['expires' => time() + 31536000, 'path' => '/', 'samesite' => 'Lax']);
+    }
+    $_COOKIE['oe_home'] = $slug;
+}
+
+function home_href(): string {
+    if (!HOME_CHOOSER) return '/';
+    $home = $_COOKIE['oe_home'] ?? '';
+    return in_array($home, ['home-1', 'home-2'], true) ? '/' . $home : '/';
+}
+
 function logo(): string {
-    return '<a class="logo" href="/" aria-label="' . e(SITE_NAME) . ' home">' . logo_mark()
+    return '<a class="logo" href="' . e(home_href()) . '" aria-label="' . e(SITE_NAME) . ' home">' . logo_mark()
         . '<span class="logo-word"><b>Oakton</b><span>Eats</span></span></a>';
 }
 

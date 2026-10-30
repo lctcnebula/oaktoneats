@@ -2,6 +2,7 @@
 // Expects: $page (nav key), $title, $description.
 require_once __DIR__ . '/functions.php';
 $page        = $page ?? '';
+$NAV['home']['href'] = home_href();
 $fullTitle   = isset($title) ? $title . ' | ' . SITE_NAME : SITE_NAME . ' | Coffee All Day, Breakfast, Lunch & Dinner';
 $description = $description ?? 'Oakton Eats, opening soon: coffee all day, breakfast sandwiches, refreshers and our house signature smash burgers for lunch and dinner.';
 $canonical   = site_url() . ($NAV[$page]['href'] ?? (strtok($_SERVER['REQUEST_URI'] ?? '/', '?') ?: '/'));
