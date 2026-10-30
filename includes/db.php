@@ -26,6 +26,8 @@ function db(): PDO {
         parse_str($u['query'] ?? '', $q);
         $dsn = 'pgsql:host=' . $u['host'] . ';port=' . ($u['port'] ?? 5432) . ';dbname=' . ltrim($u['path'] ?? '/postgres', '/')
              . ';sslmode=' . ($q['sslmode'] ?? 'require');
+        // Neon routes by endpoint name; older Postgres client libraries need it passed explicitly.
+        if (str_ends_with($u['host'], '.neon.tech')) $dsn .= ";options='endpoint=" . preg_replace('/-pooler$/', '', explode('.', $u['host'])[0]) . "'";
         $pdo = new PDO($dsn, urldecode($u['user'] ?? ''), urldecode($u['pass'] ?? ''), $opts);
         $id = 'SERIAL PRIMARY KEY';
         $blob = 'BYTEA';
