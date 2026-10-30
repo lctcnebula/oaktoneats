@@ -132,6 +132,28 @@ function remember_home(string $slug): void {
     $_COOKIE['oe_home'] = $slug;
 }
 
+function is_home2(): bool {
+    return HOME_CHOOSER && ($_COOKIE['oe_home'] ?? '') === 'home-2';
+}
+
+// Home 2 has its own page set: a different About, plus Gallery and Catering.
+function site_nav(): array {
+    global $NAV;
+    $nav = $NAV;
+    $nav['home']['href'] = home_href();
+    if (!is_home2()) return $nav;
+    $nav['about']['href'] = '/about-2';
+    $out = [];
+    foreach ($nav as $k => $item) {
+        $out[$k] = $item;
+        if ($k === 'menu') {
+            $out['gallery']  = ['label' => 'Gallery',  'href' => '/gallery'];
+            $out['catering'] = ['label' => 'Catering', 'href' => '/catering'];
+        }
+    }
+    return $out;
+}
+
 function home_href(): string {
     if (!HOME_CHOOSER) return '/';
     $home = $_COOKIE['oe_home'] ?? '';
