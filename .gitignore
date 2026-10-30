@@ -1,0 +1,10 @@
+# Live data: signups, messages, applications and resumes. Never commit.
+data/*
+!data/.htaccess
+
+# Tour videos for the client, not for the site
+oakton-eats-tour*.mp4
+
+.DS_Store
+.env*
+.claude/
