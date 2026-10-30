@@ -8,10 +8,28 @@
     }
   },
   "routes": [
-    { "src": "/(includes|data|tools|api)(/.*)?", "status": 404 },
-    { "src": "/.*\\.(php|md|sqlite|json|lock)$", "status": 404 },
-    { "src": "/\\..*", "status": 404 },
-    { "handle": "filesystem" },
-    { "src": "/(.*)", "dest": "/api/index.php" }
+    {
+      "src": "/(includes|data|tools|api)(/.*)?",
+      "status": 404
+    },
+    {
+      "src": "/.*\\.(php|md|sqlite|json|lock)$",
+      "status": 404
+    },
+    {
+      "src": "/\\..*",
+      "status": 404
+    },
+    {
+      "src": "/",
+      "dest": "/api/index.php"
+    },
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/api/index.php"
+    }
   ]
 }
