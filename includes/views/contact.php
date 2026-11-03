@@ -3,9 +3,8 @@
 <section class="a2-hero c2-hero">
     <img src="<?= photo('scenes/seating.jpg') ?>" alt="Seating inside the cafe with warm lamps">
     <div class="wrap a2-hero-copy">
-        <span class="kicker">Contact</span>
-        <h1>Come say <em>hello.</em></h1>
-        <p>Questions, catering, jobs or press. Pick the quickest way below, or send us a note.</p>
+        <h1>Contact <em>us</em></h1>
+        <p>Questions, catering, jobs or press. Send a message below and we'll reply by email.</p>
     </div>
 </section>
 
@@ -42,11 +41,10 @@
 <section class="section" id="form">
     <div class="wrap c2-grid">
         <div class="c2-side reveal">
-            <span class="kicker">Write to us</span>
-            <h2>Send a <em>note.</em></h2>
-            <p>We read every message and reply within a day or two.</p>
+            <h2>Send a <em>message</em></h2>
+            <p>For large or catering orders, pick that topic and tell us the date and headcount.</p>
             <ul class="c2-list">
-                <li><span>Hours</span>Coming soon. Coffee all day, breakfast, lunch &amp; dinner.</li>
+                <li><span>Hours</span>Coming soon</li>
                 <?php if (EMAIL): ?><li><span>Email</span><a href="mailto:<?= e(EMAIL) ?>"><?= e(EMAIL) ?></a></li><?php endif; ?>
                 <?php if (INSTAGRAM_URL): ?><li><span>Instagram</span><a href="<?= e(INSTAGRAM_URL) ?>" target="_blank" rel="noopener"><?= e('@' . basename(rtrim(INSTAGRAM_URL, '/'))) ?></a></li><?php endif; ?>
             </ul>

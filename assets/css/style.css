@@ -569,7 +569,7 @@ body.modal-open { overflow: hidden; }
     .notify-body h2 { margin-bottom: 16px; }
 }
 
-/* ---------- Homepage template 2 ---------- */
+/* ---------- Homepage ---------- */
 .t2-hero { position: relative; min-height: calc(100svh - var(--header-h)); display: flex; flex-direction: column; justify-content: flex-end; overflow: hidden; }
 .t2-hero-bg { position: absolute; inset: 0; }
 .t2-hero-bg img { width: 100%; height: 100%; object-fit: cover; object-position: center 45%; animation: t2zoom 14s ease-out both; }
@@ -592,7 +592,6 @@ body.modal-open { overflow: hidden; }
 .t2-tabs a:hover > .icon { transform: translateX(4px); }
 
 .t2-intro .wrap { text-align: center; max-width: 980px; }
-.t2-intro-mark { height: 64px; width: auto; margin: 0 auto 28px; }
 .t2-statement { font: 500 clamp(1.7rem, 3.4vw, 2.9rem)/1.18 var(--font-display); letter-spacing: -.03em; color: var(--ink) !important; margin-bottom: 40px; }
 .t2-statement em { font-family: var(--font-serif); font-style: italic; font-weight: 400; color: var(--gold-deep); }
 .t2-intro .perk-strip { justify-content: center; border-color: var(--line-ink); color: var(--ink-muted); }
@@ -786,7 +785,7 @@ a.addr:hover { color: var(--gold-bright); }
 @media (max-width: 560px) { .roles { grid-template-columns: 1fr; } }
 
 /* ---------- Homepage, About, Contact and Careers ---------- */
-/* About 2 */
+/* About */
 .a2-hero { position: relative; min-height: clamp(520px, 78vh, 760px); display: flex; align-items: flex-end; overflow: hidden; }
 .a2-hero > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; animation: t2zoom 14s ease-out both; }
 .a2-hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg, var(--black) 0%, rgba(11,10,8,.55) 45%, rgba(11,10,8,.25) 100%); }
@@ -804,11 +803,6 @@ a.addr:hover { color: var(--gold-bright); }
 .a2-when { font: 600 .72rem/1 var(--font-body); letter-spacing: .18em; text-transform: uppercase; color: var(--gold); }
 .a2-moment h3 { font-size: 1.5rem; margin: 10px 0 6px; }
 .a2-moment p { color: var(--muted); margin: 0; font-size: .95rem; }
-.a2-vm { display: grid; grid-template-columns: 200px 1fr; gap: 30px; padding: clamp(28px, 4vw, 44px) 0; border-top: 1px solid var(--line-ink); }
-.a2-vm:last-child { border-bottom: 1px solid var(--line-ink); }
-.a2-vm .kicker { color: var(--gold-deep); padding-top: 12px; }
-.a2-vm p { font: 500 clamp(1.6rem, 3.2vw, 2.6rem)/1.18 var(--font-display); letter-spacing: -.03em; color: var(--ink) !important; margin: 0; }
-.a2-vm em { font-family: var(--font-serif); font-style: italic; font-weight: 400; color: var(--gold-deep); }
 .a2-values { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
 .a2-value { position: relative; border-radius: var(--r-lg); overflow: hidden; min-height: 420px; display: flex; align-items: flex-end; }
 .a2-value img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .8s cubic-bezier(.2,.7,.2,1); }
@@ -825,15 +819,15 @@ a.addr:hover { color: var(--gold-bright); }
 .a2-visit p { color: var(--muted); font-size: 1.1rem; margin-bottom: 26px; }
 @media (max-width: 1100px) { .a2-values { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 760px) {
-    .a2-intro, .a2-vm { grid-template-columns: 1fr; gap: 14px; }
+    .a2-intro { grid-template-columns: 1fr; gap: 14px; }
     .a2-values { grid-template-columns: 1fr; }
     .a2-value { min-height: 340px; }
 }
-/* Light form card + title (Careers 2) */
+/* Light form card + title (Careers) */
 .light .cat-title { color: var(--ink); }
 .cat-card { background: #fff; border: 1px solid var(--line-ink); }
 .contact-form .checks input[type=radio] { width: auto; accent-color: var(--gold-deep); }
-/* Contact 2 */
+/* Contact */
 .c2-hero { min-height: clamp(460px, 66vh, 640px); }
 .c2-ways { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
 .c2-way { display: flex; flex-direction: column; gap: 6px; padding: 30px 28px; border-radius: var(--r-lg); background: #fff; border: 1px solid var(--line-ink); text-decoration: none; color: var(--ink); transition: transform .25s, box-shadow .25s; }
@@ -858,7 +852,7 @@ a.addr:hover { color: var(--gold-bright); }
 .c2-map-logo { height: 40px; width: auto; }
 .c2-map-card b { display: block; font: 700 1.05rem/1.2 var(--font-display); }
 .c2-map-card span { color: var(--muted); font-size: .9rem; }
-/* Careers 2 */
+/* Careers */
 .k2-hero .t2-actions { margin-top: 26px; }
 .k2-row { grid-template-columns: 64px 1fr 1.2fr 56px; }
 .k2-ico { width: 64px; height: 64px; border-radius: 18px; display: grid; place-items: center; background: rgba(201,162,75,.14); color: var(--gold-bright); }

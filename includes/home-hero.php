@@ -1,5 +1,5 @@
 <?php
-// Homepage hero, template 2: full-bleed photo with centered type and the four menus along the bottom.
+// Homepage hero: full-bleed photo with centered type and the four menus along the bottom.
 $soon = 'Opening ' . (OPENING_DATE !== '' ? OPENING_DATE : 'soon');
 ?>
 <section class="t2-hero">
@@ -9,7 +9,7 @@ $soon = 'Opening ' . (OPENING_DATE !== '' ? OPENING_DATE : 'soon');
     <div class="wrap t2-hero-inner">
         <div class="soon-row"><span class="soon-pill"><span class="dot"></span><?= e($soon) ?></span><?= address_link() ?></div>
         <h1><span class="ln">Coffee all day.</span> <em class="ln">Breakfast, lunch &amp; dinner.</em></h1>
-        <p class="t2-lede">Espresso and cold brew from open to close, buttery breakfast sandwiches, fresh refreshers and our house signature smash burgers.</p>
+        <p class="t2-lede">Espresso and cold brew from open to close. Croissant sandwiches in the morning, smash burgers and shakes for lunch and dinner.</p>
         <div class="t2-actions">
             <?= order_button('btn btn-gold') ?>
             <a class="btn btn-line" href="<?= e(menu_href()) ?>">See the Menu</a>

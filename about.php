@@ -1,5 +1,5 @@
 <?php
-// About page: full-photo hero, a day at Oakton, vision and mission, values with photos.
+// About page: full-photo hero, a day at Oakton Eats, how we cook.
 require_once __DIR__ . '/includes/functions.php';
 $page = 'about';
 $title = 'Our Story';
@@ -15,8 +15,8 @@ $day = [
 $values = [
     ['title' => 'Made fresh',         'text' => 'Nothing sits waiting. Coffee is pulled, eggs are cooked and beef is smashed when you order.', 'img' => 'scenes/griddle.jpg'],
     ['title' => 'Made by hand',       'text' => 'Chicken breaded in-house and sauces mixed in our kitchen.',                                   'img' => 'scenes/chicken.jpg'],
-    ['title' => 'Quality first',      'text' => 'Good beans, real butter and fresh produce. A tight menu done right.',                         'img' => 'scenes/croissants.jpg'],
-    ['title' => "Everyone's welcome", 'text' => "A seat for everyone, whether you're in for five minutes or an hour.",                         'img' => 'scenes/seating.jpg'],
+    ['title' => 'Real ingredients',   'text' => 'Good beans, real butter and fresh produce, on a short menu we can make well every time.',      'img' => 'scenes/croissants.jpg'],
+    ['title' => 'Stay a while',       'text' => "There are seats inside, so stay five minutes or an hour.",                                        'img' => 'scenes/seating.jpg'],
 ];
 require __DIR__ . '/includes/header.php';
 ?>
@@ -32,9 +32,9 @@ require __DIR__ . '/includes/header.php';
 
 <section class="section light">
     <div class="wrap a2-intro">
-        <p class="a2-big reveal">Most places pick a lane: a coffee shop or a burger joint. <em>We wanted both,</em> under one roof, done with the same care.</p>
+        <p class="a2-big reveal">Most places are a coffee shop or a burger place. <em>We wanted to be both.</em></p>
         <div class="reveal">
-            <p>So we built one counter for every hour. A proper latte when you wake up, a warm breakfast sandwich on your way out, a cold refresher in the afternoon and a smash burger with real crunch for dinner.</p>
+            <p>Mornings are lattes and croissant sandwiches. Afternoons are lemonade and iced tea. Lunch and dinner are smash burgers, crispy chicken and shakes, ordered at the same counter as your coffee.</p>
             <p>Everything is made to order, the menu stays tight, and the espresso bar never closes before the kitchen does.</p>
             <?= order_button('btn btn-black') ?>
         </div>
@@ -44,8 +44,7 @@ require __DIR__ . '/includes/header.php';
 <section class="section a2-day-sec">
     <div class="wrap">
         <div class="t2-head reveal">
-            <span class="kicker">A day at Oakton</span>
-            <h2>One counter, <em>every hour.</em></h2>
+            <h2>A day at <em>Oakton Eats</em></h2>
         </div>
     </div>
     <div class="a2-day">
@@ -62,24 +61,10 @@ require __DIR__ . '/includes/header.php';
     </div>
 </section>
 
-<section class="section light">
-    <div class="wrap">
-        <div class="a2-vm reveal">
-            <span class="kicker">Our vision</span>
-            <p>To be the neighborhood's <em>favorite stop,</em> morning, noon and night: the place you grab your first coffee and come back to for dinner.</p>
-        </div>
-        <div class="a2-vm reveal">
-            <span class="kicker">Our mission</span>
-            <p>To serve <em>great coffee and food made with care,</em> fresh to order and fairly priced, with a welcome that makes every visit easy.</p>
-        </div>
-    </div>
-</section>
-
 <section class="section">
     <div class="wrap">
         <div class="t2-head reveal">
-            <span class="kicker">What we stand for</span>
-            <h2>Our core <em>values.</em></h2>
+            <h2>How we <em>cook</em></h2>
         </div>
         <div class="a2-values">
             <?php foreach ($values as $v): ?>
@@ -95,7 +80,6 @@ require __DIR__ . '/includes/header.php';
 <section class="a2-visit">
     <img src="<?= photo('scenes/storefront.jpg') ?>" alt="A warm cafe front window at dusk" loading="lazy">
     <div class="wrap a2-visit-copy reveal">
-        <span class="kicker">Opening soon</span>
         <h2>Find us on <em>Oakton St.</em></h2>
         <p><?= e(ADDRESS_LINE1 . ', ' . ADDRESS_LINE2) ?></p>
         <div class="t2-actions">

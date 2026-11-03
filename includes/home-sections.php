@@ -1,9 +1,8 @@
-<?php // Everything below the hero, template 2. ?>
+<?php // Everything below the homepage hero. ?>
 
 <section class="section light t2-intro">
     <div class="wrap">
-        <?= logo_mark('t2-intro-mark') ?>
-        <p class="t2-statement reveal">Start your day with a <em>coffee.</em> End it with a <em>burger.</em> One neighborhood counter, from the first espresso of the morning to the last smash of the night.</p>
+        <p class="t2-statement reveal">An espresso bar and a burger griddle, opening at <?= e(ADDRESS_LINE1) ?> in Skokie. Come in for a latte in the morning or a <em>double smash</em> at night.</p>
         <?php include __DIR__ . '/perks.php'; ?>
     </div>
 </section>
@@ -11,8 +10,7 @@
 <section class="section t2-index-sec" id="menus">
     <div class="wrap">
         <div class="t2-head reveal">
-            <span class="kicker">The menus</span>
-            <h2>Four menus. <em>One counter.</em></h2>
+            <h2>On the <em>menu</em></h2>
         </div>
         <div class="t2-index">
             <?php foreach ($GROUPS as $key => $g): ?>
@@ -29,7 +27,6 @@
                 </a>
             <?php endforeach; ?>
         </div>
-        <?php if (OPENING_SOON): ?><a class="menu-soon reveal"<?= notify_attrs() ?>><span class="soon-tag">Opening soon</span>The full menu goes live when our doors open. Join the list for bonus points.<?= icon('arrow') ?></a><?php endif; ?>
     </div>
 </section>
 
@@ -37,9 +34,9 @@
     <a class="t2-panel reveal" href="<?= e(menu_href('coffee')) ?>">
         <img src="<?= photo('cold-brew.jpg') ?>" alt="A glass of cold brew over ice" loading="lazy">
         <div class="t2-panel-copy">
-            <span class="kicker">All day</span>
-            <h2>Pulled to order, <em>open to close.</em></h2>
-            <p>Hot or iced, the coffee never clocks out. Try the house Spanish latte.</p>
+            <span class="kicker">Coffee · All day</span>
+            <h2>Espresso until <em>we close</em></h2>
+            <p>Lattes, cold brew and iced coffee, hot or over ice. Start with the Spanish latte.</p>
             <span class="link">See all coffee <?= icon('arrow') ?></span>
         </div>
     </a>
@@ -47,8 +44,8 @@
         <img src="<?= photo('scenes/croissants.jpg') ?>" alt="Fresh croissants and egg and cheese croissant sandwiches" loading="lazy">
         <div class="t2-panel-copy">
             <span class="kicker">Breakfast</span>
-            <h2>Start slow. <em>Start buttery.</em></h2>
-            <p>Warm croissants and brioche stacked with fluffy egg and melted cheese.</p>
+            <h2>Croissant <em>sandwiches</em></h2>
+            <p>Egg and melted cheese on a warm croissant or toasted brioche. Burritos and wraps too.</p>
             <span class="link">Breakfast menu <?= icon('arrow') ?></span>
         </div>
     </a>
@@ -57,9 +54,8 @@
 <section class="t2-band">
     <div class="wrap t2-band-grid">
         <div class="reveal">
-            <span class="kicker">Refreshers</span>
-            <h2>Shaken cold, <em>poured bright.</em></h2>
-            <p>Fresh lemonades, fruit refreshers and iced teas for when the day warms up.</p>
+            <h2>Lemonade &amp; <em>refreshers</em></h2>
+            <p>Fresh lemonade, fruit refreshers and iced tea, all over ice.</p>
             <?= group_list('refreshers') ?>
         </div>
         <div class="t2-band-img reveal">
@@ -76,8 +72,8 @@
     <?php endif; ?>
     <div class="wrap t2-banner-copy reveal">
         <span class="kicker">House signatures · Lunch &amp; dinner</span>
-        <h2>Smashed to order, <em>never ahead.</em></h2>
-        <p>Smash burgers, hot honey chicken and loaded fries, cooked the moment you order.</p>
+        <h2>Burgers, chicken <em>&amp; shakes</em></h2>
+        <p>Smash burgers with crisp edges, hot honey chicken and loaded fries, cooked when you order.</p>
         <a class="link" href="<?= e(menu_href('signature')) ?>">See the signatures <?= icon('arrow') ?></a>
     </div>
 </section>
@@ -86,9 +82,8 @@
 
 <section class="section t2-join">
     <div class="wrap t2-join-inner reveal">
-        <span class="kicker">Opening soon</span>
-        <h2>Be first <em>in line.</em></h2>
-        <p>Join the list for bonus points on your first order and an invite to our grand opening.</p>
+        <h2>Get the <em>opening date</em></h2>
+        <p>Leave your email and we'll tell you when the doors open. You'll also get <?= e(SIGNUP_PERK) ?> and an invite to the grand opening.</p>
         <?= order_button('btn btn-black') ?>
     </div>
 </section>
@@ -97,9 +92,9 @@
     <div class="wrap">
         <div class="sec-label"><span class="kicker">Find us</span><span class="line"></span></div>
         <div class="head reveal">
-            <h2>Opening soon, <em>right here.</em></h2>
+            <h2><?= e(ADDRESS_LINE1) ?>, <em>Skokie</em></h2>
         </div>
-        <figure class="visit-photo reveal"><img src="<?= photo('scenes/storefront.jpg') ?>" alt="A warm cafe front window at dusk" loading="lazy"><figcaption><?= icon('pin') ?> <?= e(ADDRESS_LINE1 . ', ' . ADDRESS_LINE2) ?></figcaption></figure>
+        <figure class="visit-photo reveal"><img src="<?= photo('scenes/storefront.jpg') ?>" alt="A warm cafe front window at dusk" loading="lazy"></figure>
         <?php include __DIR__ . '/visit.php'; ?>
     </div>
 </section>

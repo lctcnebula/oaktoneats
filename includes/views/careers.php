@@ -4,8 +4,8 @@
     <img src="<?= photo('scenes/latte-art.jpg') ?>" alt="A barista pouring latte art">
     <div class="wrap a2-hero-copy">
         <span class="kicker">Now hiring · <?= e(ADDRESS_LINE1) ?></span>
-        <h1>Make the <em>first pour</em><br>with us.</h1>
-        <p>We're building the crew that opens our doors. No experience? We'll teach you.</p>
+        <h1>Join the <em>opening crew</em></h1>
+        <p>Baristas, line cooks, counter staff and shift leads. No experience? We'll teach you.</p>
         <div class="t2-actions"><a class="btn btn-gold" href="#apply">Apply now <?= icon('arrow') ?></a></div>
     </div>
 </section>
@@ -13,8 +13,7 @@
 <section class="section">
     <div class="wrap">
         <div class="t2-head reveal">
-            <span class="kicker">Open roles</span>
-            <h2>Find your <em>spot.</em></h2>
+            <h2>Open <em>roles</em></h2>
         </div>
         <div class="t2-index">
             <?php foreach ($roles as $r): ?>
@@ -46,9 +45,8 @@
 <section class="section light" id="apply">
     <div class="wrap contact-grid">
         <div class="reveal">
-            <span class="kicker">Apply</span>
-            <h2 class="apply-title cat-title">Tell us <em>about you.</em></h2>
-            <p>It takes two minutes. Add a resume if you have one; if not, just tell us a little about yourself.</p>
+            <h2 class="apply-title cat-title">Apply <em>here</em></h2>
+            <p>It takes about two minutes. Add a resume if you have one. If not, tell us a little about yourself in the form.</p>
             <figure class="contact-photo"><img src="<?= photo('scenes/griddle.jpg') ?>" alt="A smash burger on the griddle" loading="lazy"></figure>
         </div>
         <div class="contact-card cat-card reveal">

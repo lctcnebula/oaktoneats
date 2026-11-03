@@ -1,13 +1,12 @@
-<?php // Careers form (or its thank-you), shared by both designs. Variables come from careers.php. ?>
+<?php // Careers form (or its thank-you). Variables come from careers.php. ?>
 <?php if ($sent): ?>
     <div class="contact-done">
         <span class="ico"><?= icon('check') ?></span>
-        <h2>Thanks, <em>application in.</em></h2>
-        <p>We read every one. If it's a fit, we'll call or email you to set up a chat.</p>
+        <h2>Thanks, <em>it's in</em></h2>
+        <p>If it's a fit, we'll call or email you to set up a chat.</p>
         <a class="btn btn-gold" href="/">Back to home</a>
     </div>
 <?php else: ?>
-    <h2>Job <em>application.</em></h2>
     <?php if ($error): ?><p class="contact-error" role="alert"><?= e($error) ?></p><?php endif; ?>
     <form class="contact-form" method="post" action="/careers#apply" enctype="multipart/form-data">
         <div class="two">

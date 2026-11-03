@@ -1,13 +1,12 @@
-<?php // Contact form (or its thank-you), shared by both designs. Variables come from contact.php. ?>
+<?php // Contact form (or its thank-you). Variables come from contact.php. ?>
 <?php if ($sent): ?>
     <div class="contact-done">
         <span class="ico"><?= icon('check') ?></span>
-        <h2>Thanks, <em>we got it.</em></h2>
-        <p>We'll get back to you soon. In the meantime, join the list for bonus points on your first order.</p>
+        <h2>Thanks, <em>we got it</em></h2>
+        <p>We'll reply by email. While you're here, join the opening list for <?= e(SIGNUP_PERK) ?>.</p>
         <?= order_button() ?>
     </div>
 <?php else: ?>
-    <h2>Send a <em>message.</em></h2>
     <?php if ($error): ?><p class="contact-error" role="alert"><?= e($error) ?></p><?php endif; ?>
     <form class="contact-form" method="post" action="/contact#form">
         <div class="two">

@@ -2,14 +2,14 @@
 
 <footer class="site-footer">
     <div class="wrap footer-big">
-        <h2>Coffee all day.<br><em>Breakfast, lunch &amp; dinner.</em></h2>
+        <h2>See you on<br><em>Oakton St.</em></h2>
         <div class="footer-cta"><?php if (OPENING_SOON): ?><span class="soon-pill"><span class="dot"></span>Opening <?= e(OPENING_DATE !== '' ? OPENING_DATE : 'soon') ?></span><?php endif; ?><?= order_button('btn btn-gold') ?></div>
     </div>
 
     <div class="wrap footer-grid">
         <div>
             <?= logo() ?>
-            <p>Your all-day neighborhood spot<?= OPENING_SOON ? ', opening soon' : '' ?>. Coffee from open to close, with breakfast, lunch and dinner from one counter.</p>
+            <p>Coffee, breakfast sandwiches, refreshers and smash burgers<?= has_address() ? ' at ' . e(ADDRESS_LINE1) . ', ' . e(ADDRESS_LINE2) : '' ?>.</p>
             <?php if (INSTAGRAM_URL || TIKTOK_URL || FACEBOOK_URL): ?>
                 <div class="socials">
                     <?php if (INSTAGRAM_URL): ?><a href="<?= e(INSTAGRAM_URL) ?>" target="_blank" rel="noopener" aria-label="Instagram"><?= icon('instagram') ?></a><?php endif; ?>
