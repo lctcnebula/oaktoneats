@@ -7,6 +7,7 @@ $root = dirname(__DIR__);
 chdir($root);
 $path = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?: '/';
 $slug = trim($path, '/');
+$slug = ['robots.txt' => 'robots', 'sitemap.xml' => 'sitemap'][$slug] ?? $slug;
 $file = $root . '/' . ($slug === '' ? 'index' : $slug) . '.php';
 
 if (preg_match('/^[a-z0-9-]*$/', $slug) && is_file($file) && !in_array($slug, ['router', '404'], true)) {

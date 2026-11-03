@@ -1,91 +1,108 @@
 <?php
+// About page: full-photo hero, a day at Oakton, vision and mission, values with photos.
+require_once __DIR__ . '/includes/functions.php';
 $page = 'about';
-$title = 'About Us';
-$description = 'Oakton Eats is an all-day neighborhood spot opening soon: coffee from open to close, with breakfast, lunch and dinner from one counter.';
+$title = 'Our Story';
+$description = 'The story of Oakton Eats in Skokie, IL: one counter for coffee all day, breakfast sandwiches, refreshers and smash burgers.';
+
+$day = [
+    ['when' => 'Morning',     'title' => 'The first pour',      'text' => 'Espresso, lattes and cold brew for the commute and the early risers.', 'img' => 'scenes/latte-art.jpg'],
+    ['when' => 'Breakfast',   'title' => 'Out of the oven',     'text' => 'Butter croissants stacked with fluffy egg and melted cheese.',           'img' => 'croissant-egg-cheese.jpg'],
+    ['when' => 'Afternoon',   'title' => 'Something cold',      'text' => 'Fresh lemonades and fruit refreshers, shaken over ice.',                 'img' => 'scenes/refreshers.jpg'],
+    ['when' => 'Dinner',      'title' => 'On the griddle',      'text' => 'Smash burgers with crispy edges and hot honey chicken.',                 'img' => 'scenes/griddle.jpg'],
+    ['when' => 'Late',        'title' => 'One more round',      'text' => 'A thick shake or one last coffee before you head home.',                 'img' => 'scenes/shakes.jpg'],
+];
+$values = [
+    ['title' => 'Made fresh',         'text' => 'Nothing sits waiting. Coffee is pulled, eggs are cooked and beef is smashed when you order.', 'img' => 'scenes/griddle.jpg'],
+    ['title' => 'Made by hand',       'text' => 'Chicken breaded in-house and sauces mixed in our kitchen.',                                   'img' => 'scenes/chicken.jpg'],
+    ['title' => 'Quality first',      'text' => 'Good beans, real butter and fresh produce. A tight menu done right.',                         'img' => 'scenes/croissants.jpg'],
+    ['title' => "Everyone's welcome", 'text' => "A seat for everyone, whether you're in for five minutes or an hour.",                         'img' => 'scenes/seating.jpg'],
+];
 require __DIR__ . '/includes/header.php';
 ?>
 
-<section class="page-hero">
-    <div class="wrap">
-        <div>
-            <span class="kicker">About Oakton Eats</span>
-            <h1>One counter, <em>open all day.</em></h1>
-        </div>
-        <div>
-            <p>A neighborhood spot for the whole day. Coffee when you wake up, a warm breakfast sandwich on your way out, a refresher in the afternoon and a smash burger for dinner.</p>
+<section class="a2-hero">
+    <img src="<?= photo('scenes/counter.jpg') ?>" alt="The Oakton Eats counter with the espresso machine and pastry case">
+    <div class="wrap a2-hero-copy">
+        <span class="kicker">Our story</span>
+        <h1>Start with <em>coffee.</em><br>End with a <em>burger.</em></h1>
+        <p>Oakton Eats is a neighborhood counter on Oakton St in Skokie, built for the whole day.</p>
+    </div>
+</section>
+
+<section class="section light">
+    <div class="wrap a2-intro">
+        <p class="a2-big reveal">Most places pick a lane: a coffee shop or a burger joint. <em>We wanted both,</em> under one roof, done with the same care.</p>
+        <div class="reveal">
+            <p>So we built one counter for every hour. A proper latte when you wake up, a warm breakfast sandwich on your way out, a cold refresher in the afternoon and a smash burger with real crunch for dinner.</p>
+            <p>Everything is made to order, the menu stays tight, and the espresso bar never closes before the kitchen does.</p>
+            <?= order_button('btn btn-black') ?>
         </div>
     </div>
-    <div class="wrap page-strip">
-        <img src="<?= photo('scenes/latte-art.jpg') ?>" alt="" loading="lazy">
-        <img src="<?= photo('scenes/croissants.jpg') ?>" alt="" loading="lazy">
-        <img src="<?= photo('hero-burger.jpg') ?>" alt="" loading="lazy">
-        <img src="<?= photo('scenes/refreshers.jpg') ?>" alt="" loading="lazy">
+</section>
+
+<section class="section a2-day-sec">
+    <div class="wrap">
+        <div class="t2-head reveal">
+            <span class="kicker">A day at Oakton</span>
+            <h2>One counter, <em>every hour.</em></h2>
+        </div>
+    </div>
+    <div class="a2-day">
+        <?php foreach ($day as $d): ?>
+            <article class="a2-moment reveal">
+                <img src="<?= photo($d['img']) ?>" alt="" loading="lazy">
+                <div>
+                    <span class="a2-when"><?= e($d['when']) ?></span>
+                    <h3><?= e($d['title']) ?></h3>
+                    <p><?= e($d['text']) ?></p>
+                </div>
+            </article>
+        <?php endforeach; ?>
     </div>
 </section>
 
 <section class="section light">
     <div class="wrap">
-        <div class="sec-label"><span class="kicker">Our story</span><span class="line"></span></div>
-        <div class="spot">
-            <div class="spot-copy reveal">
-                <h2>We didn't want to <em>pick a lane.</em></h2>
-                <p>Most places are a coffee shop or a burger joint. We wanted both: somewhere you can start the morning with a proper latte and come back at lunch for a burger with real crunch on the edges.</p>
-                <p>So Oakton Eats does both. Breakfast, lunch and dinner from one counter: breakfast sandwiches, fresh refreshers and our house signature smash burgers. The espresso bar never stops.</p>
-                <a class="link" href="<?= e(menu_href()) ?>">See the menu <?= icon('arrow') ?></a>
-            </div>
-            <div class="spot-media reveal">
-                <img src="<?= photo('iced-coffee.jpg') ?>" alt="Iced coffee being poured" loading="lazy">
-                <img class="mini" src="<?= photo('croissant-egg-cheese.jpg') ?>" alt="An egg and cheese croissant sandwich" loading="lazy">
-                <img class="mini mini-2" src="<?= photo('hero-burger.jpg') ?>" alt="A double smash burger" loading="lazy">
-                <div class="stamp stamp-low"><b>All day</b>Menu</div>
-            </div>
+        <div class="a2-vm reveal">
+            <span class="kicker">Our vision</span>
+            <p>To be the neighborhood's <em>favorite stop,</em> morning, noon and night: the place you grab your first coffee and come back to for dinner.</p>
+        </div>
+        <div class="a2-vm reveal">
+            <span class="kicker">Our mission</span>
+            <p>To serve <em>great coffee and food made with care,</em> fresh to order and fairly priced, with a welcome that makes every visit easy.</p>
         </div>
     </div>
 </section>
 
-<section class="section light">
+<section class="section">
     <div class="wrap">
-        <div class="sec-label"><span class="kicker">What we stand for</span><span class="line"></span></div>
-        <div class="vm">
-            <div class="vm-card reveal">
-                <span class="vm-ico"><?= icon('sun') ?></span>
-                <span class="kicker">Our vision</span>
-                <p>To be the neighborhood's <em>favorite stop</em>, morning, noon and night: the place you grab your first coffee and come back to for dinner.</p>
-            </div>
-            <div class="vm-card dark reveal">
-                <span class="vm-ico"><?= icon('flame') ?></span>
-                <span class="kicker">Our mission</span>
-                <p>To serve <em>great coffee and food made with care</em>, fresh to order and fairly priced, with a welcome that makes every visit easy.</p>
-            </div>
-        </div>
-
-        <div class="core-head reveal">
+        <div class="t2-head reveal">
+            <span class="kicker">What we stand for</span>
             <h2>Our core <em>values.</em></h2>
         </div>
-        <div class="core">
-            <div class="core-item reveal"><span class="ico"><?= icon('flame') ?></span><h3>Made fresh</h3><p>Espresso pulled to order, eggs cooked when you order, beef smashed on the spot. Nothing sits waiting.</p></div>
-            <div class="core-item reveal"><span class="ico"><?= icon('hand') ?></span><h3>Made by hand</h3><p>Chicken breaded in-house and sauces mixed in our kitchen. Small details you can taste.</p></div>
-            <div class="core-item reveal"><span class="ico"><?= icon('check') ?></span><h3>Quality first</h3><p>Good beans, real butter and fresh produce. We'd rather keep the menu tight than cut corners.</p></div>
-            <div class="core-item reveal"><span class="ico"><?= icon('users') ?></span><h3>Everyone's welcome</h3><p>Friendly faces and a seat for everyone, whether you're in for five minutes or an hour.</p></div>
-        </div>
-    </div>
-</section>
-
-<?php $reels = reels(5); if ($reels): ?>
-<section class="section alt">
-    <div class="wrap">
-        <div class="sec-label"><span class="kicker">Behind the counter</span><span class="line"></span></div>
-        <div class="head reveal"><h2>Watch it <em>come together.</em></h2></div>
-        <div class="reels">
-            <?php foreach ($reels as $r): ?>
-                <div class="reel reveal">
-                    <?= reel_media($r) ?>
-                    <span><?= e($r['label']) ?></span>
-                </div>
+        <div class="a2-values">
+            <?php foreach ($values as $v): ?>
+                <article class="a2-value reveal">
+                    <img src="<?= photo($v['img']) ?>" alt="" loading="lazy">
+                    <div><h3><?= e($v['title']) ?></h3><p><?= e($v['text']) ?></p></div>
+                </article>
             <?php endforeach; ?>
         </div>
     </div>
 </section>
-<?php endif; ?>
+
+<section class="a2-visit">
+    <img src="<?= photo('scenes/storefront.jpg') ?>" alt="A warm cafe front window at dusk" loading="lazy">
+    <div class="wrap a2-visit-copy reveal">
+        <span class="kicker">Opening soon</span>
+        <h2>Find us on <em>Oakton St.</em></h2>
+        <p><?= e(ADDRESS_LINE1 . ', ' . ADDRESS_LINE2) ?></p>
+        <div class="t2-actions">
+            <?= order_button('btn btn-gold') ?>
+            <?php if (MAPS_URL): ?><a class="btn btn-line" href="<?= e(MAPS_URL) ?>" target="_blank" rel="noopener"><?= icon('pin') ?> Directions</a><?php endif; ?>
+        </div>
+    </div>
+</section>
 
 <?php require __DIR__ . '/includes/footer.php'; ?>

@@ -20,6 +20,14 @@ ErrorDocument 404 /404.php
     RewriteRule ^ /%1 [L,R=301]
     RewriteRule ^index$ / [L,R=301]
 
+    # Old preview pages from the design round
+    RewriteRule ^home-[12]/?$ / [L,R=301]
+    RewriteRule ^about-2/?$ /about [L,R=301]
+
+    # robots.txt and sitemap.xml are built by PHP
+    RewriteRule ^robots\.txt$ robots.php [L]
+    RewriteRule ^sitemap\.xml$ sitemap.php [L]
+
     # /about -> about.php
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d

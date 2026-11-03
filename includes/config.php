@@ -6,12 +6,8 @@ const SITE_NAME = 'Oakton Eats';
 const SITE_TAGLINE = 'Coffee all day · Breakfast, lunch & dinner';
 const SITE_URL  = '';            // e.g. 'https://oaktoneats.com' (no trailing slash)
 
-// true: the site address (/) shows a page to pick Home 1 or Home 2, and "Home" then goes to the one picked.
-// false: / shows Home 1 straight away.
-const HOME_CHOOSER = true;
-
 // Thin bar above the header. Leave '' to hide it.
-const ANNOUNCEMENT = 'Opening soon · Coffee all day · Breakfast, lunch & dinner';
+const ANNOUNCEMENT = '';
 
 // The restaurant's clock. The homepage shows breakfast in the morning and lunch & dinner after LUNCH_FROM.
 // This uses the restaurant's time zone, not the visitor's computer or the server's.

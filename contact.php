@@ -32,5 +32,5 @@ $page = 'contact';
 $title = 'Contact';
 $description = 'Contact Oakton Eats at 4949 Oakton St, Skokie, IL. Questions, catering, jobs or press: send us a message.';
 require __DIR__ . '/includes/header.php';
-include __DIR__ . '/includes/views/contact-' . (is_home2() ? '2' : '1') . '.php';
+include __DIR__ . '/includes/views/contact.php';
 require __DIR__ . '/includes/footer.php';

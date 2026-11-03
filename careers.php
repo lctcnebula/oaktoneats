@@ -55,5 +55,5 @@ $page = 'careers';
 $title = 'Careers';
 $description = 'Join the Oakton Eats team in Skokie, IL. We are hiring baristas, line cooks, front counter and shift leads for our opening.';
 require __DIR__ . '/includes/header.php';
-include __DIR__ . '/includes/views/careers-' . (is_home2() ? '2' : '1') . '.php';
+include __DIR__ . '/includes/views/careers.php';
 require __DIR__ . '/includes/footer.php';

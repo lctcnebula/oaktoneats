@@ -1,4 +1,4 @@
-<?php // Careers page body, Home 2 design. Variables come from careers.php. ?>
+<?php // Careers page body. Variables come from careers.php. ?>
 
 <section class="a2-hero k2-hero">
     <img src="<?= photo('scenes/latte-art.jpg') ?>" alt="A barista pouring latte art">

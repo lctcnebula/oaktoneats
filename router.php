@@ -9,6 +9,9 @@ if ($path !== '/' && is_file(__DIR__ . $path)) {
 }
 
 $slug = trim($path, '/');
+$moved = ['home-1' => '/', 'home-2' => '/', 'about-2' => '/about'];
+if (isset($moved[$slug])) { header('Location: ' . $moved[$slug], true, 301); exit; }
+$slug = ['robots.txt' => 'robots', 'sitemap.xml' => 'sitemap'][$slug] ?? $slug;
 $file = __DIR__ . '/' . ($slug === '' ? 'index' : $slug) . '.php';
 if (preg_match('/^[a-z0-9-]*$/', $slug) && is_file($file) && $slug !== 'router') {
     require $file;

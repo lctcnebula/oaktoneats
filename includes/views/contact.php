@@ -1,4 +1,4 @@
-<?php // Contact page body, Home 2 design. Variables come from contact.php. ?>
+<?php // Contact page body. Variables come from contact.php. ?>
 
 <section class="a2-hero c2-hero">
     <img src="<?= photo('scenes/seating.jpg') ?>" alt="Seating inside the cafe with warm lamps">
