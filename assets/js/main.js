@@ -68,11 +68,26 @@
             if (t) { e.preventDefault(); if (nav && nav.classList.contains('open')) toggle.click(); openModal(); return; }
             if (e.target.closest('[data-notify-close]')) closeModal();
         });
-        document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !modal.hidden) closeModal(); });
+        document.addEventListener('keydown', function (e) {
+            if (modal.hidden) return;
+            if (e.key === 'Escape') closeModal();
+            // Keep Tab inside the popup while it's open
+            if (e.key === 'Tab') {
+                var f = modal.querySelectorAll('button, input:not([tabindex="-1"]), a[href]');
+                var first = f[0], last = f[f.length - 1];
+                if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+                else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+            }
+        });
 
-        // Show it once on its own for first-time visitors.
-        if (!store('oe-notify-seen') && !/subscribed=/.test(location.search)) {
-            setTimeout(function () { if (modal.hidden) openModal(); }, 6000);
+        // Show it once on its own for first-time visitors, but not on pages with their own form,
+        // not to people already on the list, and not while someone is typing.
+        var busyPage = document.querySelector('.contact-form');
+        if (!busyPage && !store('oe-notify-seen') && !store('oe-subscribed') && !/subscribed=/.test(location.search)) {
+            setTimeout(function () {
+                var typing = document.activeElement && /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName);
+                if (modal.hidden && !typing) openModal();
+            }, 6000);
         }
 
         var form = modal.querySelector('[data-notify-form]');
@@ -93,37 +108,6 @@
                 .then(function () { btn.disabled = false; });
         });
     }
-
-    // Hero collage: layers drift a little with the mouse
-    var stage = document.querySelector('[data-parallax]');
-    if (stage && !reduceMotion && window.matchMedia('(hover: hover)').matches) {
-        var layers = stage.querySelectorAll('[data-depth]');
-        var raf = 0;
-        document.querySelector('.hero').addEventListener('mousemove', function (e) {
-            var x = e.clientX / innerWidth - .5, y = e.clientY / innerHeight - .5;
-            cancelAnimationFrame(raf);
-            raf = requestAnimationFrame(function () {
-                layers.forEach(function (l) {
-                    var d = +l.dataset.depth;
-                    l.style.transform = 'translate(' + (-x * d).toFixed(1) + 'px,' + (-y * d).toFixed(1) + 'px)';
-                });
-            });
-        });
-    }
-
-    // ---------- Homepage-style tabs ----------
-    document.querySelectorAll('[role="tablist"]').forEach(function (list) {
-        var tabs = list.querySelectorAll('[role="tab"]');
-        tabs.forEach(function (tab) {
-            tab.addEventListener('click', function () {
-                tabs.forEach(function (x) {
-                    var sel = x === tab;
-                    x.setAttribute('aria-selected', sel);
-                    document.getElementById(x.getAttribute('aria-controls')).hidden = !sel;
-                });
-            });
-        });
-    });
 
     // ---------- Menu page ----------
     var catNav = document.querySelector('.cat-nav');

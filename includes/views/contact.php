@@ -1,7 +1,7 @@
 <?php // Contact page body. Variables come from contact.php. ?>
 
 <section class="a2-hero c2-hero">
-    <img src="<?= photo('scenes/seating.jpg') ?>" alt="Seating inside the cafe with warm lamps">
+    <img src="<?= photo('scenes/seating.jpg') ?>" alt="Seating inside the cafe with warm lamps" fetchpriority="high">
     <div class="wrap a2-hero-copy">
         <h1>Contact <em>us</em></h1>
         <p>Questions, catering, jobs or press. Send a message below and we'll reply by email.</p>

@@ -22,7 +22,7 @@ require __DIR__ . '/includes/header.php';
 ?>
 
 <section class="a2-hero">
-    <img src="<?= photo('scenes/counter.jpg') ?>" alt="The Oakton Eats counter with the espresso machine and pastry case">
+    <img src="<?= photo('scenes/counter.jpg') ?>" alt="The Oakton Eats counter with the espresso machine and pastry case" fetchpriority="high">
     <div class="wrap a2-hero-copy">
         <span class="kicker">Our story</span>
         <h1>Start with <em>coffee.</em><br>End with a <em>burger.</em></h1>

@@ -95,6 +95,6 @@
             <h2><?= e(ADDRESS_LINE1) ?>, <em>Skokie</em></h2>
         </div>
         <figure class="visit-photo reveal"><img src="<?= photo('scenes/storefront.jpg') ?>" alt="A warm cafe front window at dusk" loading="lazy"></figure>
-        <?php include __DIR__ . '/visit.php'; ?>
+        <?php $visitHoursOnly = true; include __DIR__ . '/visit.php'; ?>
     </div>
 </section>

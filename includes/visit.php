@@ -20,6 +20,7 @@
     </div>
 
     <div class="sched reveal">
+        <?php if (empty($visitHoursOnly)): ?>
         <h3>What we <em>serve</em></h3>
         <?php foreach ($GROUPS as $key => $g): ?>
             <a class="sched-row" href="<?= e(menu_href($key)) ?>">
@@ -29,5 +30,11 @@
             </a>
         <?php endforeach; ?>
         <?php include __DIR__ . '/hours.php'; ?>
+        <?php else: ?>
+        <h3>Opening <em>hours</em></h3>
+        <?php if ($HOURS): include __DIR__ . '/hours.php'; else: ?>
+            <p class="hours-soon">We'll post our hours before opening day. <a<?= notify_attrs() ?>>Join the list</a> and you'll hear first.</p>
+        <?php endif; ?>
+        <?php endif; ?>
     </div>
 </div>

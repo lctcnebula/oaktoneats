@@ -4,7 +4,7 @@ $soon = 'Opening ' . (OPENING_DATE !== '' ? OPENING_DATE : 'soon');
 ?>
 <section class="t2-hero">
     <div class="t2-hero-bg" aria-hidden="true">
-        <img src="<?= photo('iced-coffee.jpg') ?>" alt="">
+        <img src="<?= photo('iced-coffee.jpg') ?>" alt="" fetchpriority="high">
     </div>
     <div class="wrap t2-hero-inner">
         <div class="soon-row"><span class="soon-pill"><span class="dot"></span><?= e($soon) ?></span><?= address_link() ?></div>

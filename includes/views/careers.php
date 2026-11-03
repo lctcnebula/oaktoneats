@@ -1,7 +1,7 @@
 <?php // Careers page body. Variables come from careers.php. ?>
 
 <section class="a2-hero k2-hero">
-    <img src="<?= photo('scenes/latte-art.jpg') ?>" alt="A barista pouring latte art">
+    <img src="<?= photo('scenes/latte-art.jpg') ?>" alt="A barista pouring latte art" fetchpriority="high">
     <div class="wrap a2-hero-copy">
         <span class="kicker">Now hiring · <?= e(ADDRESS_LINE1) ?></span>
         <h1>Join the <em>opening crew</em></h1>
